@@ -21,7 +21,7 @@ void main()
 
 #endif // WRITE_TO_FILE
 
-
+#ifdef READ_FROM_FILE  // Чтение файла 
 	char filename[_MAX_FNAME] = {};
 	cout << "Введите имя файла: ";
 	cin.getline(filename, _MAX_FNAME);
@@ -42,13 +42,12 @@ void main()
 			fin.getline(buffer, SIZE); //Используем 'fin.getline' 
 			cout << buffer << endl;
 		}
-		{
-
-		}
 		fin.close();	//Закрываем поток только в том случае, если он открыт
 	}
 	else
 	{
 		cout << "Error: File not found" << endl;
 	}
+#endif // READ_FROM_FILE  
+	
 }
