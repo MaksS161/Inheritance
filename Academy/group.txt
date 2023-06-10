@@ -1,0 +1,6 @@
+class Student:	Pinkman        Jessie    25 Chemistry             WW_220  98      95      
+class Teacher:	White          Walter    50 Chemistry             20 
+class Graduate:	Schreder       Hank      40 Criminalistic         OBN     90      70      How to catch Heizenberg
+class Student:	Vercetty       Tomas     30 Theft                 Vice    98      99      
+class Teacher:	Diaz           Ricardo   50 Weapons distribution  25 
+class Graduate:	Rosenberg      Ken       27 Lower                 Vice    75      20      Get money back
