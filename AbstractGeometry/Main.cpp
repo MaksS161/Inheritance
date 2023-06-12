@@ -48,14 +48,25 @@ namespace Geometry
 		}
 		void draw()const
 		{
-			for (int i = 0; i < side; i++)
+			/*for (int i = 0; i < side; i++)
 			{
 				for (int i = 0; i < side; i++)
 				{
 					cout << "* ";
 				}
 				cout << endl;
-			}
+			}*/ //Звездочки
+			
+			HWND hwnd = GetConsoleWindow();// получаем обрабодчик
+			HDC hdc = GetDC(hwnd); //Контекст устройства
+			HPEN hPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));//Создаем карандаш
+			HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));// Создаем кисть
+			SelectObject(hdc, hPen);//Выбираем чем и на чем 
+			SelectObject(hdc, hBrush);
+			::Rectangle(hdc, 400, 0, 500, 100);//Выбираем функцию рисования
+			DeleteObject(hPen);// Удаляем кисть и карандаш
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);//Освобождаем контекст устройства
 		}
 		void info()const
 		{
@@ -111,7 +122,7 @@ namespace Geometry
 			// Теперь нужно определиться с тем, чем мы будем рисовать 
 			
 			//3. Создаем карандаш: Карандаш рисует контур фигуры 
-			HPEN hPen = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));	//PS_SOLID - сплошная линия 
+			HPEN hPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));	//PS_SOLID - сплошная линия 
 																// 5 - толщина линии
 			//4. Создаем кисть. Кисть выполняет заливку фигуры 
 			HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
@@ -123,7 +134,7 @@ namespace Geometry
 
 			//6. Когда все объекты созданы и выбраны, можно рисовать нужную нам фигуру,
 			// при помощи соответствующей нам функции
-			::Rectangle(hdc, 100, 100, 300, 200);//В скобках 2-5 координаты 
+			::Rectangle(hdc, 400, 150, 600, 250);//В скобках 2-5 координаты 
 
 			//7. Кисть и карандаш так же занимают ресурсы поэтому их тоже нужно удалить:
 
@@ -150,12 +161,12 @@ void main()
 	setlocale(LC_ALL, "");
 
 	Geometry::Sguare square(5);
-	cout << "Длина стороны квадрата = " << square.get_side() << endl;
-	cout << "Диагональ квадрата = " << square.get_diagonal() << endl;
-	cout << "Площадь квадрата = " << square.get_area() << endl;
-	cout << "Периметр квадрата = " << square.get_perimetr() << endl;
-	square.draw();
-	cout << delimiter << endl;
+	//cout << "Длина стороны квадрата = " << square.get_side() << endl;
+	//cout << "Диагональ квадрата = " << square.get_diagonal() << endl;
+	//cout << "Площадь квадрата = " << square.get_area() << endl;
+	//cout << "Периметр квадрата = " << square.get_perimetr() << endl;
+	//square.draw();
+	//cout << delimiter << endl;
 	square.info();
 
 	cout << delimiter << endl;
