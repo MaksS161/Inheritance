@@ -2,7 +2,7 @@
 #include<Windows.h>
 using namespace std;
 
-#define delimiter "\n---------------------------------------------\n"
+#define delimiter "\n-----------------------------------------------------------\n"
 namespace Geometry
 {
 	class Shape
@@ -154,6 +154,112 @@ namespace Geometry
 			Shape::info();
 		}
 	};
+
+class Triangle :public Shape
+{
+	double a; //Сторона треульника А
+	double b; //Сторона треульника B
+	double c; //Сторона треульника C
+public:
+	Triangle(double a, double b, double c)
+	{
+		this->a = a;
+		this->b = b;
+		this->c = c;
+	}
+	~Triangle() {}
+
+	double get_a()const
+	{
+		return a;
+	}
+	double get_b()const
+	{
+		return b;
+	}
+	double get_c()const
+	{
+		return c;
+	}
+	double get_area()const
+	{
+		double p = (a + b + c) / 2;//полупериметр
+		return sqrt(p * (p - a) * (p - b) * (p - c));//формула Герона
+	}
+	double get_perimetr()const
+	{
+		return a + b + c;
+	}
+	void draw()const
+	{
+		HWND hwnd = GetConsoleWindow();
+		HDC hdc = GetDC(hwnd);
+		HPEN hPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));
+		HBRUSH hBrush = CreateSolidBrush(RGB(225, 0, 0));
+		SelectObject(hdc, hPen);
+		SelectObject(hdc, hBrush);
+		POINT points[]={{400, 400 }, {450, 300 }, {500, 400 }};
+		:: Polygon(hdc, points, 3);
+		DeleteObject(hPen);
+		DeleteObject(hBrush);
+		ReleaseDC(hwnd, hdc);
+	}
+
+	void info()const
+	{
+		cout << typeid(*this).name() << endl;
+		cout << "1 сторона треугольника = " << a << endl;
+		cout << "2 сторона треугольника = " << b << endl;
+		cout << "3 сторона треугольника = " << c << endl;
+		Shape::info();
+	}
+};
+class Circle :public Shape
+{
+	double radius;
+public:
+	Circle(double radius)
+	{
+		this->radius = radius;
+	}
+	~Circle(){}
+	double get_radius()const
+	{
+		return radius;
+	}
+	double get_diameter()const
+	{
+		return radius * 2;
+	}
+	double get_area()const
+	{
+		return radius*radius* 3.14;
+	}
+	double get_perimetr()const
+	{
+		return radius*2*3.14;
+	}
+	void draw()const
+	{
+		HWND hwnd = GetConsoleWindow();// получаем обрабодчик
+		HDC hdc = GetDC(hwnd); //Контекст устройства
+		HPEN hPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));//Создаем карандаш
+		HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));// Создаем кисть
+		SelectObject(hdc, hPen);//Выбираем чем и на чем 
+		SelectObject(hdc, hBrush);
+		::Ellipse(hdc, 400, 460, 500, 560);//Выбираем функцию рисования
+		DeleteObject(hPen);// Удаляем кисть и карандаш
+		DeleteObject(hBrush);
+		ReleaseDC(hwnd, hdc);//Освобождаем контекст устройства
+	}
+	void info()const
+	{
+		cout << typeid(*this).name() << endl;
+		cout << "Радиус круга =" << get_radius() << endl;
+		cout << "Диаметр круга =" << get_diameter() << endl;
+		Shape::info();
+	}
+};
 }
 
 void main()
@@ -172,5 +278,13 @@ void main()
 	cout << delimiter << endl;
 	Geometry:: Rectangle rect(25, 15);
 	rect.info();
+	
+	cout << delimiter << endl;
+	Geometry::Triangle tria(15,15,20);
+	tria.info();
+
+	cout << delimiter << endl;
+	Geometry::Circle circ(15);
+	circ.info();
 }
 
