@@ -241,7 +241,7 @@ public:
 	}
 	void draw()const
 	{
-		HWND hwnd = GetConsoleWindow();// получаем обрабодчик
+		HWND hwnd = GetConsoleWindow();// Получаем обрабодчик
 		HDC hdc = GetDC(hwnd); //Контекст устройства
 		HPEN hPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));//Создаем карандаш
 		HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));// Создаем кисть
@@ -267,12 +267,12 @@ void main()
 	setlocale(LC_ALL, "");
 
 	Geometry::Sguare square(5);
-	//cout << "Длина стороны квадрата = " << square.get_side() << endl;
-	//cout << "Диагональ квадрата = " << square.get_diagonal() << endl;
-	//cout << "Площадь квадрата = " << square.get_area() << endl;
-	//cout << "Периметр квадрата = " << square.get_perimetr() << endl;
-	//square.draw();
-	//cout << delimiter << endl;
+	/*cout << "Длина стороны квадрата = " << square.get_side() << endl;
+	cout << "Диагональ квадрата = " << square.get_diagonal() << endl;
+	cout << "Площадь квадрата = " << square.get_area() << endl;
+	cout << "Периметр квадрата = " << square.get_perimetr() << endl;
+	square.draw();
+	cout << delimiter << endl;*/
 	square.info();
 
 	cout << delimiter << endl;
