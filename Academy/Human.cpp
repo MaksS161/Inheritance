@@ -1,10 +1,6 @@
+#include"stdafx.h"
 #include"Human.h"
 
-
-//#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, int age
-//#define HUMAN_GIVE_PARAMETERS last_name, first_name,  age
-
-//public:
 	const std::string& get_last_name()const
 	{
 		return last_name;
@@ -64,16 +60,16 @@
 		return ifs;
 	}
 
-	std::ostream& operator<<(std::ostream& os, const Human& obj)
-	{
-		return obj.print(os);
-	}
-	std::ofstream& operator<<(std::ofstream& ofs, const Human& obj)
-	{
-		obj.print(ofs);
-		return ofs;
-	}
-	std::ifstream& operator>>(std::ifstream& ifs, Human& obj)
-	{
-		return obj.scan(ifs);
-	}
+std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	return obj.print(os);
+}
+std::ofstream& operator<<(std::ofstream& ofs, const Human& obj)
+{
+	obj.print(ofs);
+	return ofs;
+}
+std::ifstream& operator>>(std::ifstream& ifs, Human& obj)
+{
+	return obj.scan(ifs);
+}

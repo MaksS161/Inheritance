@@ -1,5 +1,11 @@
 #pragma once
 
+#include"Human.h"
+#include"Student.h"
+#include"Teacher.h"
+#include"Graduate.h"
+#include"PrintSaveRead.h"
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -12,6 +18,7 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n-------------------------------------\n"
 
-#define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, int age
-#define HUMAN_GIVE_PARAMETERS last_name, first_name,  age
+//#define INHERITANCE_CHECK
+//#define POLYMORPHISM
+#define LOAD_FROM_FILE
 

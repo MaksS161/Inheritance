@@ -3,6 +3,7 @@
 
 
 
+
 class Human
 {
 	static const int LAST_NAME_WIDTH = 15;// 'static const' - статическа константа 
@@ -25,3 +26,6 @@ public:
 	virtual ofstream& print(std::ofstream& ofs)const;
 	virtual std::ifstream& scan(std::ifstream& ifs);
 };
+std::ostream& operator<<(std::ostream& os, const Human& obj);
+std::ofstream& operator<<(std::ofstream& ofs, const Human& obj);
+std::ifstream& operator>>(std::ifstream& ifs, Human& obj);
