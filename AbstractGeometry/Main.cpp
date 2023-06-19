@@ -268,7 +268,7 @@ void main()
 	COORD coord= {};
 	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, &coord);
 	
-	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "") ;
 
 	Geometry::Sguare square(5);
 	/*cout << "Длина стороны квадрата = " << square.get_side() << endl;
