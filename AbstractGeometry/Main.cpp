@@ -264,6 +264,10 @@ public:
 
 void main()
 {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD coord= {};
+	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, &coord);
+	
 	setlocale(LC_ALL, "");
 
 	Geometry::Sguare square(5);
