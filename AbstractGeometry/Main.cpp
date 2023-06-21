@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#define _USE_MATH_DEFINES
+#include <iostream>
 #include<Windows.h>
 using namespace std;
 
@@ -158,7 +159,7 @@ namespace Geometry
 			//3. Создаем карандаш: Карандаш рисует контур фигуры 
 			HPEN hPen = CreatePen(PS_SOLID, 5, color);	//PS_SOLID - сплошная линия 
 			// 5 - толщина линии
-//4. Создаем кисть. Кисть выполняет заливку фигуры 
+			//4. Создаем кисть. Кисть выполняет заливку фигуры 
 			HBRUSH hBrush = CreateSolidBrush(color);
 
 			//5. Перед рисование нужно выбрать чем, и на чем мы будем рисовать 
@@ -195,21 +196,241 @@ namespace Geometry
 		Square(double side, SHAPE_TAKE_PARAMETRS) :Rectangle(side, side, SHAPE_GIVE_PARAMETRS) {}
 		~Square() {}
 	};
+	
+	class Circle :public Shape
+	{
+		double radius;
+	public:
+		Circle(double radius, SHAPE_TAKE_PARAMETRS) :Shape( SHAPE_GIVE_PARAMETRS)
+		{
+			set_radius(radius);
+		}
+		void set_radius(double radius)
+		{
+			if (radius < Limits::MIN_LENGHT)radius = Limits::MIN_LENGHT;
+			if (radius > Limits::MAX_LENGHT)radius = Limits::MAX_LENGHT;
+			this->radius = radius;
+		}
+		double get_radius()const
+		{
+			return radius;
+		}
+		double get_area()const
+		{
+			return radius * radius * M_PI;
+		}
+		double get_perimetr()const
+		{
+			return 2 * M_PI * radius;
+		}
+		double get_diameter()const
+		{
+			return 2* radius;
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			::Ellipse(hdc, start_x, start_y, start_x+get_diameter(),start_y+get_diameter() );
+
+			DeleteObject(hPen);
+			DeleteObject(hBrush);
+
+			ReleaseDC(hwnd, hdc);
+		}
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Радиус круга: " << get_radius() << endl;
+			Shape::info();
+		}
+	};
+	
+	class Triangle :public Shape
+	{
+	public:
+		Triangle(SHAPE_TAKE_PARAMETRS) :Shape(SHAPE_GIVE_PARAMETRS) {};
+		~Triangle() {}
+		virtual double get_height()const = 0;
+		void info()const
+		{
+			cout << "Высота треугольника: " << get_height() << endl;
+			Shape::info();
+		}
+	};
+
+	class EquillateralTriangle :Triangle
+	{
+		double side;
+	public:
+		EquillateralTriangle(double side, SHAPE_TAKE_PARAMETRS) : Triangle(SHAPE_GIVE_PARAMETRS)
+		{
+			set_side(side);
+		}
+		void set_side(double side)
+		{
+			if (side < Limits::MIN_LENGHT)side = Limits::MIN_LENGHT;
+			if (side > Limits::MAX_LENGHT)side = Limits::MIN_LENGHT;
+			this->side = side;
+		}
+		double get_side()const
+		{
+			return side;
+		}
+		double get_height()const
+		{
+			return sqrt(pow(side, 2) - pow(side / 2, 2));
+		}
+		double get_area()const
+		{
+			return (side / 2 * get_height());
+		}
+		double get_perimetr()const
+		{
+			return side * 3;
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrash = CreateSolidBrush(color);
+
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrash);
+
+			POINT vertex[] =
+			{
+				{start_x,start_y+side},
+				{start_x + side,start_y+side},
+				{start_x+side/2,start_y+side- get_height()}
+			};
+			::Polygon(hdc, vertex, 3);
+
+			DeleteObject(hPen);
+			DeleteObject(hBrash);
+
+			ReleaseDC(hwnd, hdc);
+		}
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Длина стороны: " << get_side() << endl;
+			Triangle::info();
+		}
+	};
+	class IsoscalesTriangle :public Triangle
+	{
+		double base;//основание
+		double side;//сторона
+	public:
+		IsoscalesTriangle(double base, double side, SHAPE_TAKE_PARAMETRS) :Triangle(SHAPE_GIVE_PARAMETRS)
+		{
+			set_base(base);
+			set_side(side);
+		}
+		~IsoscalesTriangle(){}
+		void set_base(double base)
+		{
+			if (base < Limits::MIN_LENGHT)base = Limits::MIN_LENGHT;
+			if (base > Limits::MAX_LENGHT)base = Limits::MAX_LENGHT;
+			this->base = base;
+		}
+		void set_side(double side)
+		{
+			if (side < Limits::MIN_LENGHT)side = Limits::MIN_LENGHT;
+			if (side > Limits::MAX_LENGHT)side = Limits::MAX_LENGHT;
+			this->side=side;
+		}
+		double get_base()const
+		{
+			return base;
+		}
+		double get_side()const
+		{
+			return side;
+		}
+		double get_height()const
+		{
+			return sqrt(pow(side, 2) - pow(base / 2, 2));
+		}
+		double get_area()const
+		{
+			return base* get_height() / 2;
+		}
+		double get_perimetr()const
+		{
+			return base+ 2 * side ;
+		}
+		void draw()const
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrash = CreateSolidBrush(color);
+
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrash);
+
+			POINT vertex[] =
+			{
+				{start_x,start_y + side},
+				{start_x + base,start_y + side},
+				{start_x + base / 2,start_y + side - get_height()}
+			};
+			::Polygon(hdc, vertex, 3);
+
+			DeleteObject(hPen);
+			DeleteObject(hBrash);
+
+			ReleaseDC(hwnd, hdc);
+		}
+		void info()const
+		{
+			cout << typeid(*this).name() << endl;
+			cout << "Основание: " << get_base() << endl;
+			cout << "Сторона: " << get_side() << endl;
+			Triangle::info();
+		}
+	};
 
 }
 
+
 void main()
+
 {
 	/*HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD coord= {};
 	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, &coord);
 	*/
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);	//Получаем окно консоли:
+	//COORD coord = {};	//Объявляем экземпляр структуры COORD. Мы никак не используем этот экземпляр, но без него невозможно вызвать функцию
+	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, NULL);	//Функция SetConsoleDisplayMode() задает режим отображения консоли
+
 	setlocale(LC_ALL, "");
 
 	Geometry::Square square(100, Geometry::Color::red, 400, 10, 5);
 	square.info();
 	cout << delimiter << endl;
+
 	Geometry::Rectangle rect(200, 100, Geometry::Color::grey, 400, 160, 5);
 	rect.info();
 	cout << delimiter << endl;
+
+	Geometry::Circle sun(40, Geometry::Color::yellow, 400, 320);
+	sun.info();
+	cout << delimiter << endl;
+
+	Geometry::EquillateralTriangle eq_tri(80, Geometry::Color::green, 400, 440);
+	eq_tri.info();
+	cout << delimiter << endl;
+
+	Geometry::IsoscalesTriangle iso_tri(50,100, Geometry::Color::dlue, 400, 540);
+	iso_tri.info();
 }
