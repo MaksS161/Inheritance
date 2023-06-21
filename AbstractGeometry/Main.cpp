@@ -200,10 +200,10 @@ namespace Geometry
 
 void main()
 {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	/*HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD coord= {};
 	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, &coord);
-	
+	*/
 	setlocale(LC_ALL, "");
 
 	Geometry::Square square(100, Geometry::Color::red,400,10,5);
