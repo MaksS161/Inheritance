@@ -22,7 +22,7 @@ namespace Geometry
 		MAX_START_X = 1000,
 		MIN_START_Y = 10,
 		MAX_START_Y = 800,
-		MIN_LINE_WIDTH = 3,
+		MIN_LINE_WIDTH = 1,
 		MAX_LINE_WIDTH = 30,
 		//-------------------
 		MIN_LENGHT = 20,
@@ -406,8 +406,8 @@ void main()
 
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);	//Получаем окно консоли:
-	//COORD coord = {};	//Объявляем экземпляр структуры COORD. Мы никак не используем этот экземпляр, но без него невозможно вызвать функцию
-	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, NULL);	//Функция SetConsoleDisplayMode() задает режим отображения консоли
+	COORD coord = {};	//Объявляем экземпляр структуры COORD. Мы никак не используем этот экземпляр, но без него невозможно вызвать функцию
+	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, &coord);	//Функция SetConsoleDisplayMode() задает режим отображения консоли
 
 	setlocale(LC_ALL, "");
 
@@ -427,6 +427,6 @@ void main()
 	eq_tri.info();
 	cout << delimiter << endl;
 
-	Geometry::IsoscalesTriangle iso_tri(50,100, Geometry::Color::dlue, 400, 540);
+	Geometry::IsoscalesTriangle iso_tri(250,120, Geometry::Color::dlue, 400, 540,1);
 	iso_tri.info();
 }
