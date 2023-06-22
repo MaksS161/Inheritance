@@ -406,8 +406,7 @@ void main()
 
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);	//Получаем окно консоли:
-	COORD coord = {};	//Объявляем экземпляр структуры COORD. Мы никак не используем этот экземпляр, но без него невозможно вызвать функцию
-	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, &coord);	//Функция SetConsoleDisplayMode() задает режим отображения консоли
+	SetConsoleDisplayMode(hConsole, CONSOLE_FULLSCREEN_MODE, NULL);	//Функция SetConsoleDisplayMode() задает режим отображения консоли
 
 	setlocale(LC_ALL, "");
 
